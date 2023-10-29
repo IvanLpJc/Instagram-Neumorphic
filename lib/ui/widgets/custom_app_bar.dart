@@ -1,14 +1,15 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
-import 'package:neumorphic_instagram/providers/theme_provider.dart';
-import 'package:provider/provider.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatefulWidget {
   const CustomAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+  State<CustomAppBar> createState() => _CustomAppBarState();
+}
 
+class _CustomAppBarState extends State<CustomAppBar> {
+  @override
+  Widget build(BuildContext context) {
     return SliverAppBar(
       floating: true,
       snap: true,
@@ -38,6 +39,23 @@ class CustomAppBar extends StatelessWidget {
       ),
       actions: [
         Center(
+          child: NeumorphicSwitch(
+            height: 20,
+            style: NeumorphicSwitchStyle(
+                activeTrackColor: Colors.blueGrey,
+                inactiveTrackColor: Colors.blueGrey.shade200),
+            value: !NeumorphicTheme.of(context)!.isUsingDark,
+            onChanged: (value) {
+              if (value) {
+                NeumorphicTheme.of(context)?.themeMode = ThemeMode.light;
+              } else {
+                NeumorphicTheme.of(context)?.themeMode = ThemeMode.dark;
+              }
+              setState(() {});
+            },
+          ),
+        ),
+        Center(
           child: NeumorphicButton(
             child: NeumorphicIcon(
               Icons.favorite_border_outlined,
@@ -53,9 +71,10 @@ class CustomAppBar extends StatelessWidget {
           ),
         ),
       ],
-      backgroundColor: themeProvider.currentThemeMode == ThemeMode.light
-          ? themeProvider.baseColorLight
-          : themeProvider.baseColorDark,
+      // backgroundColor: themeProvider.currentThemeMode == ThemeMode.light
+      //     ? themeProvider.baseColorLight
+      //     : themeProvider.baseColorDark,
+      backgroundColor: NeumorphicTheme.of(context)!.current!.baseColor,
     );
   }
 }

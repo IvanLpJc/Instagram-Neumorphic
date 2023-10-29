@@ -76,6 +76,7 @@ class _FeedPageState extends State<FeedPage>
 
     return Scaffold(
       extendBody: true,
+      backgroundColor: NeumorphicTheme.of(context)!.current!.baseColor,
       body: CustomScrollView(
         controller: _scrollController,
         physics: const BouncingScrollPhysics(

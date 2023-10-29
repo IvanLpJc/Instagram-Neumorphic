@@ -22,16 +22,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return NeumorphicApp(
-        title: 'Neuromorphic Instagram',
+        title: 'Neumorphic Instagram',
         debugShowCheckedModeBanner: false,
         themeMode: themeProvider.currentThemeMode,
-        theme: NeumorphicThemeData(
-          baseColor: themeProvider.baseColorLight,
+        theme: const NeumorphicThemeData(
+          baseColor: Color(0xFFE0DEE0),
           lightSource: LightSource.bottomLeft,
           depth: 1.5,
         ),
-        darkTheme: NeumorphicThemeData(
-          baseColor: themeProvider.baseColorDark,
+        darkTheme: const NeumorphicThemeData(
+          baseColor: Color(0xFF2E2E2E),
           lightSource: LightSource.bottomLeft,
           depth: 1.5,
         ),

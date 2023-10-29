@@ -62,6 +62,9 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = NeumorphicTheme.of(context)!.isUsingDark
+        ? const NeumorphicThemeData().baseColor
+        : const NeumorphicThemeData.dark().baseColor;
     return Container(
       width: width,
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -97,6 +100,7 @@ class _TopBar extends StatelessWidget {
             child: NeumorphicIcon(
               Icons.more_vert_rounded,
               size: 25,
+              style: NeumorphicStyle(color: color),
             ),
           ),
         ],
@@ -114,10 +118,9 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final color = themeProvider.currentThemeMode == ThemeMode.light
-        ? themeProvider.baseColorDark
-        : themeProvider.baseColorLight;
+    final color = NeumorphicTheme.of(context)!.isUsingDark
+        ? const NeumorphicThemeData().baseColor
+        : const NeumorphicThemeData.dark().baseColor;
     return Container(
       width: width,
       padding: const EdgeInsets.only(left: 10, top: 5, right: 15),
@@ -158,10 +161,10 @@ class _Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final color = themeProvider.currentThemeMode == ThemeMode.light
-        ? themeProvider.baseColorDark
-        : themeProvider.baseColorLight;
+    final color = NeumorphicTheme.of(context)!.isUsingDark
+        ? const NeumorphicThemeData().baseColor
+        : const NeumorphicThemeData.dark().baseColor;
+
     return SizedBox(
       width: width,
       child: Neumorphic(

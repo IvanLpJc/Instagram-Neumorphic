@@ -34,6 +34,9 @@ class _Story extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = NeumorphicTheme.of(context)!.isUsingDark
+        ? const NeumorphicThemeData().baseColor
+        : const NeumorphicThemeData.dark().baseColor;
     return Container(
       margin: const EdgeInsets.only(left: 17),
       child: Column(
@@ -60,8 +63,8 @@ class _Story extends StatelessWidget {
           ),
           NeumorphicText(
             'Your story',
-            style: const NeumorphicStyle(
-              color: Colors.black87, //customize color here
+            style: NeumorphicStyle(
+              color: color, //customize color here
             ),
             textStyle: NeumorphicTextStyle(
               fontWeight: FontWeight.bold,
