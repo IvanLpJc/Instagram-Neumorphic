@@ -6,4 +6,4 @@ Pictures obtained from PEXELS.
 
 ## Demo
 
-<img src="https://github.com/IvanLpJc/Neumorphic-Instagram-Clone/blob/main/demo/demo.gif" width=200px>
+<img src="https://github.com/IvanLpJc/Instagram-Neumorphic/blob/main/demo/demo.gif" width=200px>
