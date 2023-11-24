@@ -1,3 +1,11 @@
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+
+extension StringExtensions on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1)}";
+  }
+}
+
 class Photo {
   int id;
   int width;
@@ -7,6 +15,7 @@ class Photo {
   String photographerUrl;
   int photographerId;
   bool liked;
+  Color avgColor;
   String alt;
 
   Photo({
@@ -18,6 +27,7 @@ class Photo {
     required this.photographerUrl,
     required this.photographerId,
     required this.liked,
+    required this.avgColor,
     required this.alt,
   });
 
@@ -30,6 +40,8 @@ class Photo {
         photographerUrl: json["photographer_url"],
         photographerId: json["photographer_id"],
         liked: json["liked"],
+        avgColor:
+            Color(int.parse('0xff${json["avg_color"].replaceAll("#", "")}')),
         alt: json["alt"],
       );
 }

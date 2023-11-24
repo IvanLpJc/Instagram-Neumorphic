@@ -2,15 +2,16 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
-import 'package:neumorphic_instagram/global/environment.dart';
+import 'package:neumorphic_instagram/global/environment-dev.dart';
 import 'package:neumorphic_instagram/models/pexel_response.dart';
 import 'package:neumorphic_instagram/models/photo.dart';
 
 class PexelsProvider with ChangeNotifier {
   final List<Photo> photos = [];
+  final List<Photo> stories = [];
   final dio = Dio();
 
-  late int currentPage;
+  late int nextPage;
 
   bool _isLoading = false;
 
@@ -26,13 +27,14 @@ class PexelsProvider with ChangeNotifier {
     dio.options.headers = {
       'Authorization': Environment.apiKey,
     };
-    currentPage = Random().nextInt(100);
+    nextPage = Random().nextInt(100);
 
     _initData();
   }
 
-  _initData() async {
+  Future<void> _initData() async {
     await getPhotos();
+    await getStories();
   }
 
   Future<List<Photo>> getPhotos() async {
@@ -42,11 +44,12 @@ class PexelsProvider with ChangeNotifier {
       'query': 'people',
       'per_page': '10',
       'orientation': 'portrait',
-      'page': currentPage + 1
+      'page': nextPage
     };
 
     try {
-      isLoading = false;
+      isLoading = true;
+      await Future.delayed(const Duration(seconds: 2));
       final response = await dio.request(url,
           queryParameters: query, options: Options(method: 'GET'));
 
@@ -54,7 +57,7 @@ class PexelsProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final pexelsResponse = PexelResponse.fromJson(response.data);
-        currentPage = pexelsResponse.page;
+        nextPage = pexelsResponse.page;
         photos.addAll(pexelsResponse.photos);
 
         return photos;
@@ -66,9 +69,41 @@ class PexelsProvider with ChangeNotifier {
     }
   }
 
+  Future<List<Photo>> getStories() async {
+    const url = '/search';
+
+    final query = {
+      'query': 'people',
+      'per_page': '10',
+      'orientation': 'portrait',
+      'page': nextPage
+    };
+
+    try {
+      isLoading = true;
+      final response = await dio.request(url,
+          queryParameters: query, options: Options(method: 'GET'));
+
+      isLoading = false;
+
+      if (response.statusCode == 200) {
+        final pexelsResponse = PexelResponse.fromJson(response.data);
+        nextPage = Random().nextInt(100);
+
+        stories.addAll(pexelsResponse.photos);
+
+        return stories;
+      } else {
+        return stories;
+      }
+    } catch (exception) {
+      throw Error.safeToString(exception);
+    }
+  }
+
   Future<List<Photo>> refreshPhotos() async {
     photos.clear();
-    currentPage = Random().nextInt(100);
+    nextPage = Random().nextInt(100);
 
     return await getPhotos();
   }

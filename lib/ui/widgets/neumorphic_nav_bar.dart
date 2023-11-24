@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:neumorphic_instagram/helpers/helpers.dart';
 import 'package:neumorphic_instagram/providers/page_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,15 +12,13 @@ class NeumorphicNavBar extends StatelessWidget {
 
     const avatar = CircleAvatar(
       radius: 12,
+      backgroundColor: Colors.transparent,
       backgroundImage: AssetImage('assets/images/profile.jpg'),
     );
 
-    const avatarStyle = NeumorphicStyle(
-        shape: NeumorphicShape.concave,
-        boxShape: NeumorphicBoxShape.circle(),
-        lightSource: LightSource.topLeft,
-        color: Colors.grey);
-    const iconStyle = NeumorphicStyle(color: Colors.black, depth: 1.5);
+    final color = Styles.getBaseColor(context);
+
+    final iconStyle = Styles.iconStyle(context);
 
     return NeumorphicToggle(
         height: 55,
@@ -75,15 +74,14 @@ class NeumorphicNavBar extends StatelessWidget {
                   size: 30, style: iconStyle)),
           ToggleElement(
             foreground: Neumorphic(
-              style: avatarStyle,
+              style: Styles.avatarStyle(color: color),
               child: const CircleAvatar(
                 radius: 14,
-                backgroundColor: Colors.black,
                 child: avatar,
               ),
             ),
             background: Neumorphic(
-              style: avatarStyle,
+              style: Styles.avatarStyle(color: color),
               child: const CircleAvatar(radius: 12, child: avatar),
             ),
           ),

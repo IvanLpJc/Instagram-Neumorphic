@@ -1,9 +1,11 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:neumorphic_instagram/helpers/helpers.dart';
+import 'package:neumorphic_instagram/models/photo.dart';
 
 class StoriesCarrousel extends StatelessWidget {
-  const StoriesCarrousel({
-    super.key,
-  });
+  final List<Photo> stories;
+  const StoriesCarrousel({super.key, required this.stories});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class StoriesCarrousel extends StatelessWidget {
           child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 10,
+              itemCount: stories.length,
               itemBuilder: (_, index) {
-                return const _Story();
+                return _Story(story: stories[index]);
               }),
         ),
       ),
@@ -30,7 +32,8 @@ class StoriesCarrousel extends StatelessWidget {
 }
 
 class _Story extends StatelessWidget {
-  const _Story();
+  final Photo story;
+  const _Story({required this.story});
 
   @override
   Widget build(BuildContext context) {
@@ -43,18 +46,13 @@ class _Story extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Neumorphic(
-            style: const NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape: NeumorphicBoxShape.circle(),
-                depth: 1.5,
-                lightSource: LightSource.topLeft,
-                color: Colors.grey),
+            style: Styles.avatarStyle(color: color, borderWith: 3),
             child: CircleAvatar(
-              radius: 46,
-              backgroundColor: Colors.blueGrey.shade600,
-              child: const CircleAvatar(
-                radius: 44,
-                backgroundImage: AssetImage('assets/images/profile.jpg'),
+              radius: 45,
+              backgroundColor: Colors.transparent,
+              child: FancyShimmerImage(
+                imageUrl: story.url,
+                boxFit: BoxFit.cover,
               ),
             ),
           ),
@@ -62,12 +60,11 @@ class _Story extends StatelessWidget {
             height: 5,
           ),
           NeumorphicText(
-            'Your story',
+            story.photographer,
             style: NeumorphicStyle(
               color: color, //customize color here
             ),
             textStyle: NeumorphicTextStyle(
-              fontWeight: FontWeight.bold,
               fontSize: 12,
             ),
           ),

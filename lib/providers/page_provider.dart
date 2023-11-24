@@ -5,7 +5,7 @@ class PageProvider extends ChangeNotifier {
 
   int get selectedPage => _selectedPage;
 
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(initialPage: 0);
 
   set selectedPage(int page) {
     _pageController.animateToPage(page,
